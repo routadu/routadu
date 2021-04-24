@@ -1,8 +1,6 @@
 - 👋 Hi, I’m @routadu
 - 👀 I’m interested in Flutter, Python
-- 🌱 I’m currently learning 
-- 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me - @routadu ( Twitter & Instagram )
+- 📫 I'm on Twitter and Instagram @routadu ( @routadu )
 
 <!---
 routadu/routadu is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
