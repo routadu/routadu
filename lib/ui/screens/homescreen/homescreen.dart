@@ -56,20 +56,50 @@ class ScrollableLayer extends StatefulWidget {
 class _ScrollableLayerState extends State<ScrollableLayer> {
   ScrollController sc = ScrollController();
 
-  void navigateToAbout(BuildContext context) {
-    sc.animateTo(
-      MediaQuery.of(context).size.height * 1.2,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOutSine,
-    );
+  void navigateToContact(BuildContext context) {
+    return;
+
+    // sc.animateTo(
+    //   MediaQuery.of(context).size.height * 1.2,
+    //   duration: const Duration(milliseconds: 500),
+    //   curve: Curves.easeInOutSine,
+    // );
   }
 
-  void navigateToContact(BuildContext context) {
+  void navigateToAbout(BuildContext context) {
     sc.animateTo(
       MediaQuery.of(context).size.height * 1.25 * 2,
       duration: const Duration(milliseconds: 1000),
       curve: Curves.easeInOutSine,
     );
+  }
+
+  void _showMessage() {
+    ScaffoldMessenger.of(context).showMaterialBanner(
+      MaterialBanner(
+        backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+        content: const Text("❕ This website is currently under development"),
+        actions: [
+          TextButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+              },
+              child: const Text("Okay")),
+        ],
+      ),
+    );
+  }
+
+  void showMessage() async {
+    await Future.delayed(const Duration(seconds: 3));
+    _showMessage();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    showMessage();
   }
 
   @override
