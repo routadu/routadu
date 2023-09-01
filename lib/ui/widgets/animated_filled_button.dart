@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/ui/themes/textstyles/kTextStyles.dart';
+import 'package:portfolio/constants/textstyles/kTextStyles.dart';
 
 class AnimiatedFilledButton extends StatefulWidget {
   const AnimiatedFilledButton({
@@ -53,10 +53,9 @@ class _AnimiatedFilledButtonState extends State<AnimiatedFilledButton> {
         transform: transform,
         child: FilledButton.tonal(
             style: FilledButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: isHovered
-                  ? widget.hoverColor ?? Colors.greenAccent.shade700
-                  : widget.backgroundColor ?? Colors.greenAccent.shade100,
+              // backgroundColor: isHovered
+              //     ? widget.hoverColor ?? Colors.greenAccent.shade700
+              //     : widget.backgroundColor ?? Colors.greenAccent.shade100,
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -65,7 +64,8 @@ class _AnimiatedFilledButtonState extends State<AnimiatedFilledButton> {
             onPressed: () {},
             child: Text(
               widget.text,
-              style: widget.textStyle ?? kBoldTextStyle,
+              style: widget.textStyle ??
+                  kButtonTextStyle.copyWith(color: Colors.black87),
             )),
       ),
     );

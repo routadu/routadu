@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/constants/app_constants.dart';
 import 'package:portfolio/ui/screens/homescreen/homescreen.dart';
 
 void main() {
@@ -12,10 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.openSansTextTheme(),
+        colorSchemeSeed: kThemeColor,
+        useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
-      home: Theme(
-          data: ThemeData(textTheme: GoogleFonts.openSansTextTheme()),
-          child: const HomeScreen()),
+      home: const HomeScreen(),
     );
   }
 }

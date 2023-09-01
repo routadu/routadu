@@ -1,43 +1,95 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio/ui/themes/textstyles/kTextStyles.dart';
-import 'package:portfolio/ui/widgets/onhoverbutton.dart';
+import 'package:portfolio/constants/app_constants.dart';
+import 'package:portfolio/ui/screens/homescreen/aboutscreen.dart';
+import 'package:portfolio/ui/widgets/appbar_action_button.dart';
+import 'profilesection.dart';
+import 'projectshowcasesection.dart';
 
-final profileText = RichText(
-  text: const TextSpan(
-    style: TextStyle(
-      fontWeight: FontWeight.normal,
-      fontSize: 20,
-    ),
-    children: <TextSpan>[
-      TextSpan(
-        text: 'Flutter & Android\nApp Developer\n\n',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 34,
-        ),
-      ),
-      TextSpan(
-        text:
-            'Hi, I am Aditya, focusing on\nbuilding production grade\napplications',
-      ),
-    ],
-  ),
-);
+class HomeScreenAppBar extends StatelessWidget {
+  final Function(BuildContext) onNavigateToAbout;
+  final Function(BuildContext) onNavigateToContact;
 
-class AppBarActionButton extends StatelessWidget {
-  const AppBarActionButton(
-      {super.key, required this.onPressed, required this.text});
-
-  final VoidCallback onPressed;
-  final String text;
+  const HomeScreenAppBar({
+    super.key,
+    required this.onNavigateToAbout,
+    required this.onNavigateToContact,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(text, style: kBoldTextStyle),
+    return SliverAppBar(
+      title: const Padding(
+        padding: KContentPaddingFromLeft,
+        child: Text(
+          "Aditya.",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+            color: Color(0xFFEEEEEE),
+          ),
+        ),
+      ),
+      actions: [
+        AppBarActionButton(
+          onPressed: () => onNavigateToAbout(context),
+          text: "About",
+        ),
+        AppBarActionButton(
+          onPressed: () => onNavigateToContact(context),
+          text: "Contact",
+        ),
+        const SizedBox(width: 100),
+      ],
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    );
+  }
+}
+
+class ScrollableLayer extends StatefulWidget {
+  const ScrollableLayer({super.key});
+
+  @override
+  State<ScrollableLayer> createState() => _ScrollableLayerState();
+}
+
+class _ScrollableLayerState extends State<ScrollableLayer> {
+  ScrollController sc = ScrollController();
+
+  void navigateToAbout(BuildContext context) {
+    sc.animateTo(
+      MediaQuery.of(context).size.height * 1.2,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOutSine,
+    );
+  }
+
+  void navigateToContact(BuildContext context) {
+    sc.animateTo(
+      MediaQuery.of(context).size.height * 1.25 * 2,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.easeInOutSine,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: CustomScrollView(
+        controller: sc,
+        slivers: [
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          HomeScreenAppBar(
+            onNavigateToAbout: navigateToAbout,
+            onNavigateToContact: navigateToContact,
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 50)),
+          const SliverToBoxAdapter(child: ProfileTextSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 50)),
+          const SliverToBoxAdapter(child: ProjectShowcaseSection()),
+          const SliverToBoxAdapter(child: AboutSection()),
+        ],
       ),
     );
   }
@@ -50,56 +102,14 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Colors.greenAccent,
-          //extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            title: const Padding(
-              padding: EdgeInsets.only(left: 10.0),
-              child: Text("Aditya Rout", style: kBoldTextStyle),
-            ),
-            actions: [
-              AppBarActionButton(onPressed: () {}, text: "About"),
-              AppBarActionButton(onPressed: () {}, text: "Contact"),
-              const SizedBox(width: 100),
-            ],
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        profileText,
-                        const SizedBox(height: 50),
-                        AnimiatedFilledButton(
-                          text: "View Projects",
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 100),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      child: Image.asset('assets/images/profile-portrait.png'),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        body: const Stack(
+          children: [
+            ProfileImageLayer(),
+            ScrollableLayer(),
+          ],
+        ),
+      ),
     );
   }
 }
