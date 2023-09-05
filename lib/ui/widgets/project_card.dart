@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/project/project.dart';
-import 'package:portfolio/constants/textstyles/kTextStyles.dart';
 
 class ProjectCard extends StatefulWidget {
   final Project project;
@@ -59,7 +58,7 @@ class _ProjectCardState extends State<ProjectCard> {
         duration: const Duration(milliseconds: 200),
         width: MediaQuery.of(context).size.width / 5.5,
         child: Card(
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Theme.of(context).colorScheme.background,
           elevation: 5,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -74,15 +73,19 @@ class _ProjectCardState extends State<ProjectCard> {
               children: [
                 Text(
                   widget.project.title,
-                  style: kBodyLargeTextStyle.copyWith(
+                  style: TextStyle(
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                   textAlign: TextAlign.left,
                 ),
                 const SizedBox(height: 30),
                 Text(
                   widget.project.description,
-                  style: kBodySmallTextStyle,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                 ),
                 const Expanded(child: SizedBox(height: 20)),
                 Row(

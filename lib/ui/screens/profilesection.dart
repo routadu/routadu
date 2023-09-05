@@ -31,7 +31,9 @@ class ProfileTextSection extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: RichText(
             text: TextSpan(
-              style: kBoldTextStyle,
+              style: kBoldTextStyle.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
               children: const <TextSpan>[
                 TextSpan(text: 'Hi, I am '),
                 TextSpan(text: 'Aditya', style: TextStyle(color: kThemeColor)),

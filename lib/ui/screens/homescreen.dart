@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/constants/app_constants.dart';
-import 'package:portfolio/ui/screens/homescreen/aboutscreen.dart';
+import 'package:portfolio/ui/screens/aboutscreen.dart';
 import 'package:portfolio/ui/widgets/appbar_action_button.dart';
 import 'profilesection.dart';
 import 'projectshowcasesection.dart';
+import 'dart:html' as html;
 
 class HomeScreenAppBar extends StatelessWidget {
   final Function(BuildContext) onNavigateToAbout;
   final Function(BuildContext) onNavigateToContact;
+  final VoidCallback onClickResume;
 
   const HomeScreenAppBar({
     super.key,
     required this.onNavigateToAbout,
     required this.onNavigateToContact,
+    required this.onClickResume,
   });
 
   @override
@@ -37,6 +40,10 @@ class HomeScreenAppBar extends StatelessWidget {
         AppBarActionButton(
           onPressed: () => onNavigateToContact(context),
           text: "Contact",
+        ),
+        AppBarActionButton(
+          onPressed: onClickResume,
+          text: "Resume",
         ),
         const SizedBox(width: 100),
       ],
@@ -74,11 +81,20 @@ class _ScrollableLayerState extends State<ScrollableLayer> {
     );
   }
 
+  void openResume() {
+    html.window.open(kResumePublicLink, 'new tab');
+  }
+
   void _showMessage() {
     ScaffoldMessenger.of(context).showMaterialBanner(
       MaterialBanner(
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-        content: const Text("❕ This website is currently under development"),
+        content: Text(
+          "❕ This website is currently under development",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+        ),
         actions: [
           TextButton(
               onPressed: () {
@@ -113,6 +129,7 @@ class _ScrollableLayerState extends State<ScrollableLayer> {
           HomeScreenAppBar(
             onNavigateToAbout: navigateToAbout,
             onNavigateToContact: navigateToContact,
+            onClickResume: openResume,
           ),
           const SliverToBoxAdapter(child: SizedBox(height: 50)),
           const SliverToBoxAdapter(child: ProfileTextSection()),
@@ -132,7 +149,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: const Stack(
           children: [
             ProfileImageLayer(),

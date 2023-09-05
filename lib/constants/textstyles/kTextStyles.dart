@@ -12,24 +12,7 @@ final kButtonTextStyle = TextStyle(
   fontSize: 20,
 );
 
-final kBoldTextStyle = TextStyle(
+const kBoldTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
-  color: Colors.grey.shade300,
   fontSize: 46,
-);
-
-final kBodyLargeTextStyle = TextStyle(
-  fontSize: 20,
-  fontWeight: FontWeight.w500,
-  color: Colors.grey.shade300,
-);
-
-final kBodyMediumTextStyle = TextStyle(
-  fontSize: 16,
-  color: Colors.grey.shade300,
-);
-
-final kBodySmallTextStyle = TextStyle(
-  fontSize: 14,
-  color: Colors.grey.shade300,
 );

@@ -26,7 +26,7 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).colorScheme.onBackground,
+      color: Theme.of(context).colorScheme.background,
       padding: const EdgeInsets.only(top: 50, left: 50, right: 50),
       height: MediaQuery.of(context).size.height,
       child: Row(
@@ -40,7 +40,9 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
               children: [
                 Text(
                   "My Projects",
-                  style: kBoldTextStyle,
+                  style: kBoldTextStyle.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
                 ),
                 const SizedBox(height: 80),
                 SizedBox(
@@ -48,9 +50,9 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
                   child: ListView.builder(
                     controller: sc,
                     scrollDirection: Axis.horizontal,
-                    itemCount: projectsDummyList.length,
+                    itemCount: projectsList.length,
                     itemBuilder: (context, index) {
-                      return ProjectCard(project: projectsDummyList[index]);
+                      return ProjectCard(project: projectsList[index]);
                     },
                   ),
                 ),
