@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/project/project.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class ProjectCard extends StatefulWidget {
   final Project project;
@@ -56,7 +57,12 @@ class _ProjectCardState extends State<ProjectCard> {
         transform: isFocused ? hoverState : normalState,
         margin: const EdgeInsets.only(right: 30),
         duration: const Duration(milliseconds: 200),
-        width: MediaQuery.of(context).size.width / 5.5,
+        width: MediaQuery.of(context).size.width /
+            getValueForScreenType(
+              context: context,
+              mobile: 2,
+              desktop: 5.5,
+            ),
         child: Card(
           color: Theme.of(context).colorScheme.background,
           elevation: 5,

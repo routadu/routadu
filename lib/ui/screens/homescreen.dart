@@ -2,13 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/constants/app_constants.dart';
 import 'package:portfolio/ui/screens/aboutscreen.dart';
 import 'package:portfolio/ui/widgets/appbar_action_button.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'profilesection.dart';
 import 'projectshowcasesection.dart';
 import 'dart:html' as html;
 
+class HomeScreenDrawer extends StatelessWidget {
+  final VoidCallback onNavigateToAbout;
+  final VoidCallback onNavigateToContact;
+  final VoidCallback onClickResume;
+
+  const HomeScreenDrawer({
+    super.key,
+    required this.onNavigateToAbout,
+    required this.onNavigateToContact,
+    required this.onClickResume,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      width: MediaQuery.of(context).size.width / 2.5,
+      child: ListView(
+        children: [
+          const SizedBox(height: 100),
+          AppBarActionButton(
+            onPressed: onNavigateToAbout,
+            text: "About",
+          ),
+          const SizedBox(height: 20),
+          AppBarActionButton(
+            onPressed: onNavigateToContact,
+            text: "Contact",
+          ),
+          const SizedBox(height: 20),
+          AppBarActionButton(
+            onPressed: onClickResume,
+            text: "Resume",
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class HomeScreenAppBar extends StatelessWidget {
-  final Function(BuildContext) onNavigateToAbout;
-  final Function(BuildContext) onNavigateToContact;
+  final VoidCallback onNavigateToAbout;
+  final VoidCallback onNavigateToContact;
   final VoidCallback onClickResume;
 
   const HomeScreenAppBar({
@@ -21,9 +61,15 @@ class HomeScreenAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      title: const Padding(
-        padding: KContentPaddingFromLeft,
-        child: Text(
+      titleSpacing: 0,
+      automaticallyImplyLeading: false,
+      title: Padding(
+        padding: getValueForScreenType(
+          context: context,
+          mobile: KContentPaddingFromLeftMobile,
+          desktop: KContentPaddingFromLeft,
+        ),
+        child: const Text(
           "Aditya.",
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -32,58 +78,86 @@ class HomeScreenAppBar extends StatelessWidget {
           ),
         ),
       ),
-      actions: [
-        AppBarActionButton(
-          onPressed: () => onNavigateToAbout(context),
-          text: "About",
-        ),
-        AppBarActionButton(
-          onPressed: () => onNavigateToContact(context),
-          text: "Contact",
-        ),
-        AppBarActionButton(
-          onPressed: onClickResume,
-          text: "Resume",
-        ),
-        const SizedBox(width: 100),
-      ],
+      actions: getValueForScreenType<List<Widget>>(
+        context: context,
+        mobile: [
+          IconButton(
+              onPressed: () => Scaffold.of(context).openEndDrawer(),
+              icon: const Icon(
+                Icons.menu_rounded,
+                size: 25,
+              )),
+          const SizedBox(width: 20),
+        ],
+        desktop: [
+          AppBarActionButton(
+            onPressed: onNavigateToAbout,
+            text: "About",
+          ),
+          AppBarActionButton(
+            onPressed: onNavigateToContact,
+            text: "Contact",
+          ),
+          AppBarActionButton(
+            onPressed: onClickResume,
+            text: "Resume",
+          ),
+          const SizedBox(width: 100),
+        ],
+      ),
       backgroundColor: Colors.transparent,
       elevation: 0,
     );
   }
 }
 
-class ScrollableLayer extends StatefulWidget {
-  const ScrollableLayer({super.key});
+class ScrollableLayer extends StatelessWidget {
+  const ScrollableLayer({
+    super.key,
+    required this.sc,
+    required this.onNavigateToAbout,
+    required this.onNavigateToContact,
+    required this.onClickResume,
+  });
+
+  final ScrollController sc;
+  final VoidCallback onNavigateToAbout;
+  final VoidCallback onNavigateToContact;
+  final VoidCallback onClickResume;
 
   @override
-  State<ScrollableLayer> createState() => _ScrollableLayerState();
-}
-
-class _ScrollableLayerState extends State<ScrollableLayer> {
-  ScrollController sc = ScrollController();
-
-  void navigateToContact(BuildContext context) {
-    return;
-
-    // sc.animateTo(
-    //   MediaQuery.of(context).size.height * 1.2,
-    //   duration: const Duration(milliseconds: 500),
-    //   curve: Curves.easeInOutSine,
-    // );
-  }
-
-  void navigateToAbout(BuildContext context) {
-    sc.animateTo(
-      MediaQuery.of(context).size.height * 1.25 * 2,
-      duration: const Duration(milliseconds: 1000),
-      curve: Curves.easeInOutSine,
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: CustomScrollView(
+        controller: sc,
+        slivers: [
+          const SliverToBoxAdapter(child: SizedBox(height: 10)),
+          HomeScreenAppBar(
+            onNavigateToAbout: onNavigateToAbout,
+            onNavigateToContact: onNavigateToContact,
+            onClickResume: onClickResume,
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 50)),
+          const SliverToBoxAdapter(child: ProfileTextSection()),
+          const SliverToBoxAdapter(child: SizedBox(height: 50)),
+          const SliverToBoxAdapter(child: ProjectShowcaseSection()),
+          const SliverToBoxAdapter(child: AboutSection()),
+        ],
+      ),
     );
   }
+}
 
-  void openResume() {
-    html.window.open(kResumePublicLink, 'new tab');
-  }
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  ScrollController sc = ScrollController();
 
   void _showMessage() {
     ScaffoldMessenger.of(context).showMaterialBanner(
@@ -113,47 +187,58 @@ class _ScrollableLayerState extends State<ScrollableLayer> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     showMessage();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: CustomScrollView(
-        controller: sc,
-        slivers: [
-          const SliverToBoxAdapter(child: SizedBox(height: 10)),
-          HomeScreenAppBar(
-            onNavigateToAbout: navigateToAbout,
-            onNavigateToContact: navigateToContact,
-            onClickResume: openResume,
-          ),
-          const SliverToBoxAdapter(child: SizedBox(height: 50)),
-          const SliverToBoxAdapter(child: ProfileTextSection()),
-          const SliverToBoxAdapter(child: SizedBox(height: 50)),
-          const SliverToBoxAdapter(child: ProjectShowcaseSection()),
-          const SliverToBoxAdapter(child: AboutSection()),
-        ],
-      ),
+  void navigateToContact() {
+    final scType = getDeviceType(MediaQuery.of(context).size);
+    if (scType == DeviceScreenType.mobile) {
+      Navigator.of(context).pop();
+    }
+    return;
+    // sc.animateTo(
+    //   MediaQuery.of(context).size.height * 1.2,
+    //   duration: const Duration(milliseconds: 500),
+    //   curve: Curves.easeInOutSine,
+    // );
+  }
+
+  void navigateToAbout() {
+    final scType = getDeviceType(MediaQuery.of(context).size);
+    if (scType == DeviceScreenType.mobile) {
+      Navigator.of(context).pop();
+    }
+    sc.animateTo(
+      MediaQuery.of(context).size.height * 1.25 * 2,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.easeInOutSine,
     );
   }
-}
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  void openResume() {
+    html.window.open(kResumePublicLink, 'new tab');
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        endDrawer: HomeScreenDrawer(
+          onClickResume: openResume,
+          onNavigateToAbout: navigateToAbout,
+          onNavigateToContact: navigateToContact,
+        ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: const Stack(
+        body: Stack(
           children: [
-            ProfileImageLayer(),
-            ScrollableLayer(),
+            const ProfileImageLayer(),
+            ScrollableLayer(
+              sc: sc,
+              onClickResume: openResume,
+              onNavigateToAbout: navigateToAbout,
+              onNavigateToContact: navigateToContact,
+            ),
           ],
         ),
       ),

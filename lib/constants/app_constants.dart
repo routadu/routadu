@@ -7,6 +7,7 @@ const kResumePublicLink =
     "https://drive.google.com/file/d/1tDZyKBe_ujd1ihOkQrsm-Zr5ltMlT_yv/view?usp=sharing";
 
 const kContentPaddingFromLeftDouble = 140.0;
+const kContentPaddingFromLeftMobileDouble = 40.0;
 
 const kThemeColor = Color(0xFF3944FF);
 const kBackgroundColor = Color.fromARGB(255, 12, 12, 20);
@@ -14,7 +15,10 @@ const kBackgroundColor = Color.fromARGB(255, 12, 12, 20);
 const KContentPaddingFromLeft =
     EdgeInsets.only(left: kContentPaddingFromLeftDouble);
 
-const KHorizontalContentPadding =
+const KContentPaddingFromLeftMobile =
+    EdgeInsets.only(left: kContentPaddingFromLeftMobileDouble);
+
+const kHorizontalContentPadding =
     EdgeInsets.symmetric(horizontal: kContentPaddingFromLeftDouble);
 
 const kAndroidTech = Tech(

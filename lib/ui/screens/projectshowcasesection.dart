@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/constants/app_constants.dart';
 import 'package:portfolio/constants/textstyles/kTextStyles.dart';
 import 'package:portfolio/ui/widgets/project_card.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class ProjectShowcaseSection extends StatefulWidget {
   const ProjectShowcaseSection({super.key});
@@ -27,16 +28,24 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      padding: const EdgeInsets.only(top: 50, left: 50, right: 50),
+      padding: getValueForScreenType(
+        context: context,
+        mobile: const EdgeInsets.only(top: 50, left: 0, right: 0),
+        desktop: const EdgeInsets.only(top: 50, left: 50, right: 50),
+      ),
       height: MediaQuery.of(context).size.height,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ArrowButton(onClick: scroll, direction: ArrowDirection.left),
-          const SizedBox(width: 20),
+          SizedBox(
+            width:
+                getValueForScreenType(context: context, mobile: 0, desktop: 20),
+          ),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "My Projects",
@@ -46,7 +55,13 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
                 ),
                 const SizedBox(height: 80),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.45,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height *
+                      getValueForScreenType(
+                        context: context,
+                        mobile: 0.4,
+                        desktop: 0.45,
+                      ),
                   child: ListView.builder(
                     controller: sc,
                     scrollDirection: Axis.horizontal,
@@ -79,14 +94,22 @@ class ArrowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: const Alignment(0, 0.1),
+      alignment: getValueForScreenType(
+        context: context,
+        mobile: const Alignment(0, -0.2),
+        desktop: const Alignment(0, 0.1),
+      ),
       child: IconButton(
           onPressed: () => onClick(direction),
           icon: Icon(
             direction == ArrowDirection.left
                 ? Icons.chevron_left_outlined
                 : Icons.chevron_right_outlined,
-            size: 50,
+            size: getValueForScreenType(
+              context: context,
+              mobile: 35,
+              desktop: 50,
+            ),
           )),
     );
   }

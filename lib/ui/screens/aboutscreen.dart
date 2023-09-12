@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/constants/app_constants.dart';
 import 'package:portfolio/constants/textstyles/kTextStyles.dart';
 import 'package:portfolio/models/about_info_tile_data/about_info_tile_data.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class AboutTabBar extends StatelessWidget {
   const AboutTabBar({super.key});
@@ -41,7 +42,14 @@ class AboutSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.background,
-      padding: KHorizontalContentPadding.copyWith(top: 50, right: 250),
+      padding: getValueForScreenType(
+        context: context,
+        mobile: KContentPaddingFromLeftMobile.copyWith(
+          right: kContentPaddingFromLeftMobileDouble,
+          top: 50,
+        ),
+        desktop: kHorizontalContentPadding.copyWith(top: 50, right: 250),
+      ),
       height: MediaQuery.of(context).size.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,53 +61,83 @@ class AboutSection extends StatelessWidget {
               color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
-          const SizedBox(height: 80),
+          SizedBox(
+              height: getValueForScreenType(
+                  context: context, mobile: 40, desktop: 80)),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.65,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ResponsiveBuilder(
+              builder: (context, sizingInformation) {
+                if (sizingInformation.isDesktop) {
+                  return const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AboutScreenProfilePicture(),
+                      SizedBox(width: 50),
+                      Expanded(child: AboutScreenDetailsTabView()),
+                    ],
+                  );
+                } else {
+                  return const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AboutScreenDetailsTabView(),
+                    ],
+                  );
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AboutScreenProfilePicture extends StatelessWidget {
+  const AboutScreenProfilePicture({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+      ),
+      padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Image.asset('assets/images/profile-portrait.png'),
+    );
+  }
+}
+
+class AboutScreenDetailsTabView extends StatelessWidget {
+  const AboutScreenDetailsTabView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            kAboutMeString,
+            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            maxLines: 6,
+          ),
+          const SizedBox(height: 40),
+          const AboutTabBar(),
+          const SizedBox(height: 30),
+          const SizedBox(
+            height: 200,
+            child: TabBarView(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  ),
-                  padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: Image.asset('assets/images/profile-portrait.png'),
-                ),
-                const SizedBox(width: 50),
-                Expanded(
-                  child: DefaultTabController(
-                    length: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          kAboutMeString,
-                          style: TextStyle(
-                              color:
-                                  Theme.of(context).colorScheme.onBackground),
-                          maxLines: 6,
-                        ),
-                        const SizedBox(height: 40),
-                        const AboutTabBar(),
-                        const SizedBox(height: 30),
-                        const SizedBox(
-                          height: 200,
-                          child: TabBarView(
-                            children: [
-                              SkillsView(),
-                              EducationView(),
-                              CerificationView(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                SkillsView(),
+                EducationView(),
+                CerificationView(),
               ],
             ),
           ),
