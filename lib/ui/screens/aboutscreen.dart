@@ -19,7 +19,15 @@ class AboutTabBar extends StatelessWidget {
             Text("Education"),
             Text("Certification"),
           ],
-          labelPadding: const EdgeInsets.only(left: 0, right: 60),
+          labelPadding: EdgeInsets.only(
+            left: 0,
+            right: getValueForScreenType(
+              context: context,
+              mobile: 30,
+              desktop: 60,
+            ),
+          ),
+          //labelPadding: EdgeInsets.zero,
           indicatorPadding: const EdgeInsets.only(top: 10, right: 20),
           dividerColor: Colors.transparent,
           indicatorWeight: 2,
@@ -65,7 +73,12 @@ class AboutSection extends StatelessWidget {
               height: getValueForScreenType(
                   context: context, mobile: 40, desktop: 80)),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.65,
+            height: MediaQuery.of(context).size.height *
+                getValueForScreenType(
+                  context: context,
+                  mobile: 0.75,
+                  desktop: 0.65,
+                ),
             child: ResponsiveBuilder(
               builder: (context, sizingInformation) {
                 if (sizingInformation.isDesktop) {
@@ -131,9 +144,13 @@ class AboutScreenDetailsTabView extends StatelessWidget {
           const SizedBox(height: 40),
           const AboutTabBar(),
           const SizedBox(height: 30),
-          const SizedBox(
-            height: 200,
-            child: TabBarView(
+          SizedBox(
+            height: getValueForScreenType(
+              context: context,
+              mobile: 300,
+              desktop: 200,
+            ),
+            child: const TabBarView(
               children: [
                 SkillsView(),
                 EducationView(),

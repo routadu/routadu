@@ -59,7 +59,7 @@ class _ProjectShowcaseSectionState extends State<ProjectShowcaseSection> {
                   height: MediaQuery.of(context).size.height *
                       getValueForScreenType(
                         context: context,
-                        mobile: 0.4,
+                        mobile: 0.5,
                         desktop: 0.45,
                       ),
                   child: ListView.builder(
@@ -97,7 +97,7 @@ class ArrowButton extends StatelessWidget {
       alignment: getValueForScreenType(
         context: context,
         mobile: const Alignment(0, -0.2),
-        desktop: const Alignment(0, 0.1),
+        desktop: const Alignment(0, -0.1),
       ),
       child: IconButton(
           onPressed: () => onClick(direction),

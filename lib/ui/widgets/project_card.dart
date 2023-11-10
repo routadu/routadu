@@ -63,6 +63,10 @@ class _ProjectCardState extends State<ProjectCard> {
               mobile: 2,
               desktop: 5.5,
             ),
+        height: getValueForScreenType(
+          context: context,
+          mobile: MediaQuery.of(context).size.height / 5,
+        ),
         child: Card(
           color: Theme.of(context).colorScheme.background,
           elevation: 5,
@@ -75,6 +79,7 @@ class _ProjectCardState extends State<ProjectCard> {
               vertical: 30,
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
