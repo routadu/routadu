@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Aditya K.",
       theme: ThemeData(
         textTheme: GoogleFonts.openSansTextTheme(),
         colorSchemeSeed: kThemeColor,

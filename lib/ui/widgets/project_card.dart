@@ -60,7 +60,7 @@ class _ProjectCardState extends State<ProjectCard> {
         width: MediaQuery.of(context).size.width /
             getValueForScreenType(
               context: context,
-              mobile: 2,
+              mobile: 1.5,
               desktop: 5.5,
             ),
         height: getValueForScreenType(

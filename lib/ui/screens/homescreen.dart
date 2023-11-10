@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (scType == DeviceScreenType.mobile) {
       Navigator.of(context).pop();
     }
-    return;
+    html.window.open(kLinkedinLink, 'new tab');
     // sc.animateTo(
     //   MediaQuery.of(context).size.height * 1.2,
     //   duration: const Duration(milliseconds: 500),

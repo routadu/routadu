@@ -5,6 +5,7 @@ import 'package:portfolio/models/tech/tech.dart';
 
 const kResumePublicLink =
     "https://drive.google.com/file/d/1tDZyKBe_ujd1ihOkQrsm-Zr5ltMlT_yv/view?usp=sharing";
+const kLinkedinLink = "https://www.linkedin.com/in/routadu";
 
 const kContentPaddingFromLeftDouble = 140.0;
 const kContentPaddingFromLeftMobileDouble = 40.0;
@@ -89,15 +90,16 @@ List<AboutInfoTileData> kCertificationList = [
 
 List<Project> projectsList = [
   Project(
-    title: "Portfolio Website",
+    title: "UI Kit  🌟",
     id: 1000,
     imageURL: "",
-    description: "Portfolio website built using Flutter",
+    description: "Collection of beautiful app designs made using Flutter",
     technologiesUsed: [kFlutterTech],
     sourceCodeLink: "demo",
+    liveDemoLink: "demo",
   ),
   Project(
-    title: "OP Analyzer",
+    title: "OP Analyzer  💹",
     id: 1001,
     imageURL: "",
     description: "A minimal Nifty Option Chain application",
@@ -105,7 +107,7 @@ List<Project> projectsList = [
     sourceCodeLink: "demo",
   ),
   Project(
-    title: "Bouncing Ball",
+    title: "Bouncing Ball ",
     id: 1001,
     imageURL: "",
     description:
@@ -114,7 +116,7 @@ List<Project> projectsList = [
     liveDemoLink: "demo",
   ),
   Project(
-    title: "Image Classifier",
+    title: "Image Classifier  📸",
     id: 1000,
     imageURL: "",
     description:
@@ -124,7 +126,7 @@ List<Project> projectsList = [
     liveDemoLink: "demo",
   ),
   Project(
-    title: "School Manager",
+    title: "School Manager  🏫",
     id: 1000,
     imageURL: "",
     description:
