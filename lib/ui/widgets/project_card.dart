@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/models/project/project.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'dart:html' as html;
 
 class ProjectCard extends StatefulWidget {
   final Project project;
@@ -14,20 +15,23 @@ class _ProjectCardState extends State<ProjectCard> {
   final buttonShape = const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(5)));
   bool isSourceCodePresent = false;
+  bool sourceCodeButtonEnabled = false;
   bool isLiveDemoLinkPresent = false;
+  bool liveDemoButtonEnabled = false;
   bool areBothLinksPresent = false;
   bool isFocused = false;
-  final normalState = Matrix4.identity();
+  final normalState = Matrix4.identity()..scale(0.95);
   final hoverState = Matrix4.identity()
-    ..scale(1.05)
+    ..scale(1)
     ..translate(-5, -5);
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isSourceCodePresent = widget.project.sourceCodeLink != null;
+    sourceCodeButtonEnabled = widget.project.sourceCodeLink != "";
     isLiveDemoLinkPresent = widget.project.liveDemoLink != null;
+    liveDemoButtonEnabled = widget.project.liveDemoLink != "";
     areBothLinksPresent = isSourceCodePresent && isLiveDemoLinkPresent;
   }
 
@@ -37,15 +41,15 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   void openLiveDemo() {
-    widget.project.liveDemoLink;
+    html.window.open(widget.project.liveDemoLink ?? "", 'new tab');
   }
 
   void openSourceCode() {
-    widget.project.sourceCodeLink;
+    html.window.open(widget.project.sourceCodeLink ?? "", 'new tab');
   }
 
-  void openTechWebsite() {
-    widget.project.technologiesUsed[0].website;
+  void openTechWebsite(int index) {
+    html.window.open(widget.project.technologiesUsed[index].website, 'new tab');
   }
 
   @override
@@ -106,7 +110,7 @@ class _ProjectCardState extends State<ProjectCard> {
                     return Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: GestureDetector(
-                        onTap: openTechWebsite,
+                        onTap: () => openTechWebsite(index),
                         child: Tooltip(
                           message: widget.project.technologiesUsed[index].name,
                           child: CircleAvatar(
@@ -130,14 +134,16 @@ class _ProjectCardState extends State<ProjectCard> {
                   children: [
                     isSourceCodePresent
                         ? OutlinedButton(
-                            onPressed: openSourceCode,
+                            onPressed:
+                                sourceCodeButtonEnabled ? openSourceCode : null,
                             style: OutlinedButton.styleFrom(shape: buttonShape),
                             child: const Text("Source"),
                           )
                         : const SizedBox(),
                     isLiveDemoLinkPresent
                         ? FilledButton(
-                            onPressed: openLiveDemo,
+                            onPressed:
+                                liveDemoButtonEnabled ? openLiveDemo : null,
                             style: FilledButton.styleFrom(shape: buttonShape),
                             child: const Text("View"),
                           )

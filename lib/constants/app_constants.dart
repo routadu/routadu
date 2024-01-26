@@ -4,7 +4,7 @@ import 'package:portfolio/models/project/project.dart';
 import 'package:portfolio/models/tech/tech.dart';
 
 const kResumePublicLink =
-    "https://drive.google.com/file/d/1tDZyKBe_ujd1ihOkQrsm-Zr5ltMlT_yv/view?usp=sharing";
+    "https://drive.google.com/file/d/1Yi9CIW8NRqHgchuUvJI8ovA0vvALpAVE/view?usp=drive_link";
 const kLinkedinLink = "https://www.linkedin.com/in/routadu";
 
 const kContentPaddingFromLeftDouble = 140.0;
@@ -51,12 +51,16 @@ const kPythonTech = Tech(
 
 List<AboutInfoTileData> kSkillsList = [
   AboutInfoTileData(
-      title: "Flutter", secondaryText: "Cross Platform App Development"),
-  AboutInfoTileData(
-      title: "Kotlin", secondaryText: "Native Android App Development"),
-  AboutInfoTileData(title: "Java", secondaryText: "Intermediate experience"),
-  AboutInfoTileData(title: "Python", secondaryText: "Intermediate experience"),
-  AboutInfoTileData(title: "C++", secondaryText: "Intermediate experience"),
+    title: "Flutter",
+    secondaryText: "Cross Platform App Development",
+    tertiaryText: "Intermediate",
+  ),
+  AboutInfoTileData(title: "Spring Boot", secondaryText: "Beginner"),
+  // AboutInfoTileData(
+  //     title: "Kotlin", secondaryText: "Native Android App Development"),
+  AboutInfoTileData(title: "Java", secondaryText: "Intermediate"),
+  AboutInfoTileData(title: "Python", secondaryText: "Intermediate"),
+  // AboutInfoTileData(title: "C++", secondaryText: "Intermediate experience"),
 ];
 
 List<AboutInfoTileData> kEducationList = [
@@ -81,10 +85,26 @@ List<AboutInfoTileData> kCertificationList = [
   AboutInfoTileData(
     title: "Flutter Development Bootcamp with Dart",
     secondaryText: "Udemy",
+    link:
+        "https://www.udemy.com/certificate/UC-445c16cb-90fe-46ef-999d-bed56253c4a5/",
   ),
   AboutInfoTileData(
     title: "Blockchain Summer Training",
     secondaryText: "Metacrafters",
+    link:
+        "https://drive.google.com/file/d/1ijm2_FLLJrsdSBfi7ZAgsXnbYGKU96ZP/view?usp=sharing",
+  ),
+];
+
+List<AboutInfoTileData> kContactList = [
+  AboutInfoTileData(
+    title: "Linkedin",
+    secondaryText: "",
+    link: "https://www.linkedin.com/in/routadu/",
+  ),
+  AboutInfoTileData(
+    title: "Email",
+    secondaryText: "contact@adityarout.in",
   ),
 ];
 
@@ -95,8 +115,8 @@ List<Project> projectsList = [
     imageURL: "",
     description: "Collection of beautiful app designs made using Flutter",
     technologiesUsed: [kFlutterTech],
-    sourceCodeLink: "demo",
-    liveDemoLink: "demo",
+    sourceCodeLink: "",
+    liveDemoLink: "",
   ),
   Project(
     title: "OP Analyzer  💹",
@@ -104,7 +124,7 @@ List<Project> projectsList = [
     imageURL: "",
     description: "A minimal Nifty Option Chain application",
     technologiesUsed: [kFlutterTech, kWindowsTech],
-    sourceCodeLink: "demo",
+    sourceCodeLink: "",
   ),
   Project(
     title: "Bouncing Ball ",
@@ -113,7 +133,8 @@ List<Project> projectsList = [
     description:
         "A casual ball shooting game made with Flutter.\nIt is available on the Play Store",
     technologiesUsed: [kFlutterTech],
-    liveDemoLink: "demo",
+    liveDemoLink:
+        "https://play.google.com/store/apps/details?id=com.akrdev.bouncingball",
   ),
   Project(
     title: "Image Classifier  📸",
@@ -122,8 +143,7 @@ List<Project> projectsList = [
     description:
         "A machine learning based application made using Python and Flutter, which can detect over 100 kinds of objects.",
     technologiesUsed: [kPythonTech, kFlutterTech],
-    sourceCodeLink: "demo",
-    liveDemoLink: "demo",
+    sourceCodeLink: "https://github.com/routadu/image-classification",
   ),
   Project(
     title: "School Manager  🏫",
@@ -132,8 +152,7 @@ List<Project> projectsList = [
     description:
         "Feature loaded School Management app made with Python Kivy and MySQL.",
     technologiesUsed: [kPythonTech],
-    sourceCodeLink: "demo",
-    liveDemoLink: "demo",
+    sourceCodeLink: "https://github.com/routadu/schoolmanager",
   ),
 ];
 

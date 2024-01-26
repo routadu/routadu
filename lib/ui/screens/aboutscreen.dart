@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/constants/app_constants.dart';
 import 'package:portfolio/constants/textstyles/kTextStyles.dart';
-import 'package:portfolio/models/about_info_tile_data/about_info_tile_data.dart';
+import 'package:portfolio/ui/widgets/about_info_tile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class AboutTabBar extends StatelessWidget {
@@ -9,36 +9,32 @@ class AboutTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: SizedBox(
-        child: TabBar(
-          isScrollable: true,
-          tabs: const [
-            Text("Skills"),
-            Text("Education"),
-            Text("Certification"),
-          ],
-          labelPadding: EdgeInsets.only(
-            left: 0,
-            right: getValueForScreenType(
-              context: context,
-              mobile: 30,
-              desktop: 60,
-            ),
-          ),
-          //labelPadding: EdgeInsets.zero,
-          indicatorPadding: const EdgeInsets.only(top: 10, right: 20),
-          dividerColor: Colors.transparent,
-          indicatorWeight: 2,
-          labelStyle: Theme.of(context)
-              .textTheme
-              .bodyLarge
-              ?.copyWith(fontWeight: FontWeight.w900),
-          labelColor: Colors.grey.shade400,
-          unselectedLabelColor: Colors.grey.shade400,
+    return TabBar(
+      isScrollable: true,
+      tabAlignment: TabAlignment.start,
+      tabs: const [
+        Text("Skills"),
+        Text("Education"),
+        Text("Certification"),
+        Text("Contact"),
+      ],
+      labelPadding: EdgeInsets.only(
+        left: 0,
+        right: getValueForScreenType(
+          context: context,
+          mobile: 30,
+          desktop: 60,
         ),
       ),
+      indicatorPadding: const EdgeInsets.only(top: 10, right: 20),
+      dividerColor: Colors.transparent,
+      indicatorWeight: 2,
+      labelStyle: Theme.of(context)
+          .textTheme
+          .bodyLarge
+          ?.copyWith(fontWeight: FontWeight.w900),
+      labelColor: Colors.grey.shade400,
+      unselectedLabelColor: Colors.grey.shade400,
     );
   }
 }
@@ -131,35 +127,33 @@ class AboutScreenDetailsTabView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            kAboutMeString,
-            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            maxLines: 6,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          kAboutMeString,
+          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          maxLines: 6,
+        ),
+        const SizedBox(height: 40),
+        const AboutTabBar(),
+        const SizedBox(height: 30),
+        SizedBox(
+          height: getValueForScreenType(
+            context: context,
+            mobile: 300,
+            desktop: 200,
           ),
-          const SizedBox(height: 40),
-          const AboutTabBar(),
-          const SizedBox(height: 30),
-          SizedBox(
-            height: getValueForScreenType(
-              context: context,
-              mobile: 300,
-              desktop: 200,
-            ),
-            child: const TabBarView(
-              children: [
-                SkillsView(),
-                EducationView(),
-                CerificationView(),
-              ],
-            ),
+          child: const TabBarView(
+            children: [
+              SkillsView(),
+              EducationView(),
+              CerificationView(),
+              ContactView(),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -174,22 +168,6 @@ class SkillsView extends StatelessWidget {
       itemBuilder: (context, index) {
         return AboutInfoTile(
           data: kSkillsList[index],
-        );
-      },
-    );
-  }
-}
-
-class CerificationView extends StatelessWidget {
-  const CerificationView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: kCertificationList.length,
-      itemBuilder: (context, index) {
-        return AboutInfoTile(
-          data: kCertificationList[index],
         );
       },
     );
@@ -212,33 +190,34 @@ class EducationView extends StatelessWidget {
   }
 }
 
-class AboutInfoTile extends StatelessWidget {
-  final AboutInfoTileData data;
-
-  const AboutInfoTile({super.key, required this.data});
+class CerificationView extends StatelessWidget {
+  const CerificationView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          data.title,
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
-        ),
-        subtitle: Text(
-          data.tertiaryText == null
-              ? data.secondaryText
-              : "${data.secondaryText}\n${data.tertiaryText!}",
-          style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-        ),
-        isThreeLine: data.tertiaryText != null,
-      ),
+    return ListView.builder(
+      itemCount: kCertificationList.length,
+      itemBuilder: (context, index) {
+        return AboutInfoTile(
+          data: kCertificationList[index],
+        );
+      },
+    );
+  }
+}
+
+class ContactView extends StatelessWidget {
+  const ContactView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: kContactList.length,
+      itemBuilder: (context, index) {
+        return AboutInfoTile(
+          data: kContactList[index],
+        );
+      },
     );
   }
 }

@@ -196,12 +196,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (scType == DeviceScreenType.mobile) {
       Navigator.of(context).pop();
     }
-    html.window.open(kLinkedinLink, 'new tab');
-    // sc.animateTo(
-    //   MediaQuery.of(context).size.height * 1.2,
-    //   duration: const Duration(milliseconds: 500),
-    //   curve: Curves.easeInOutSine,
-    // );
+    sc.animateTo(
+      MediaQuery.of(context).size.height * 1.25 * 2,
+      duration: const Duration(milliseconds: 1000),
+      curve: Curves.easeInOutSine,
+    );
+    DefaultTabController.of(context).animateTo(3);
   }
 
   void navigateToAbout() {
@@ -223,23 +223,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        endDrawer: HomeScreenDrawer(
-          onClickResume: openResume,
-          onNavigateToAbout: navigateToAbout,
-          onNavigateToContact: navigateToContact,
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Stack(
-          children: [
-            const ProfileImageLayer(),
-            ScrollableLayer(
-              sc: sc,
-              onClickResume: openResume,
-              onNavigateToAbout: navigateToAbout,
-              onNavigateToContact: navigateToContact,
-            ),
-          ],
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          endDrawer: HomeScreenDrawer(
+            onClickResume: openResume,
+            onNavigateToAbout: navigateToAbout,
+            onNavigateToContact: navigateToContact,
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: Stack(
+            children: [
+              const ProfileImageLayer(),
+              ScrollableLayer(
+                sc: sc,
+                onClickResume: openResume,
+                onNavigateToAbout: navigateToAbout,
+                onNavigateToContact: navigateToContact,
+              ),
+            ],
+          ),
         ),
       ),
     );
