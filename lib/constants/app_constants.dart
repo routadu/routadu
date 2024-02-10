@@ -4,7 +4,7 @@ import 'package:portfolio/models/project/project.dart';
 import 'package:portfolio/models/tech/tech.dart';
 
 const kResumePublicLink =
-    "https://drive.google.com/file/d/1Yi9CIW8NRqHgchuUvJI8ovA0vvALpAVE/view?usp=drive_link";
+    "https://drive.google.com/file/d/1qDx1VAYRHNSzDW6ouWDN9VdGUWmXa438/view?usp=drive_link";
 const kLinkedinLink = "https://www.linkedin.com/in/routadu";
 
 const kContentPaddingFromLeftDouble = 140.0;
@@ -50,12 +50,9 @@ const kPythonTech = Tech(
 );
 
 List<AboutInfoTileData> kSkillsList = [
-  AboutInfoTileData(
-    title: "Flutter",
-    secondaryText: "Cross Platform App Development",
-    tertiaryText: "Intermediate",
-  ),
+  AboutInfoTileData(title: "Flutter", secondaryText: "Intermediate"),
   AboutInfoTileData(title: "Spring Boot", secondaryText: "Beginner"),
+  AboutInfoTileData(title: "Django", secondaryText: "Beginner"),
   // AboutInfoTileData(
   //     title: "Kotlin", secondaryText: "Native Android App Development"),
   AboutInfoTileData(title: "Java", secondaryText: "Intermediate"),
@@ -96,15 +93,25 @@ List<AboutInfoTileData> kCertificationList = [
   ),
 ];
 
-List<AboutInfoTileData> kContactList = [
+List<AboutInfoTileData> kSocialsList = [
+  AboutInfoTileData(
+    title: "Email",
+    secondaryText: "contact@adityarout.in",
+  ),
   AboutInfoTileData(
     title: "Linkedin",
     secondaryText: "",
     link: "https://www.linkedin.com/in/routadu/",
   ),
   AboutInfoTileData(
-    title: "Email",
-    secondaryText: "contact@adityarout.in",
+    title: "Github",
+    secondaryText: "",
+    link: "https://www.github.com/routadu/",
+  ),
+  AboutInfoTileData(
+    title: "Leetcode",
+    secondaryText: "",
+    link: "https://www.leetcode.com/routadu/",
   ),
 ];
 

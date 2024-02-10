@@ -13,10 +13,10 @@ class AboutTabBar extends StatelessWidget {
       isScrollable: true,
       tabAlignment: TabAlignment.start,
       tabs: const [
-        Text("Skills"),
-        Text("Education"),
-        Text("Certification"),
-        Text("Contact"),
+        Text(SkillsView.tabName),
+        Text(EducationView.tabName),
+        Text(CerificationView.tabName),
+        Text(SocialsView.tabName),
       ],
       labelPadding: EdgeInsets.only(
         left: 0,
@@ -149,7 +149,7 @@ class AboutScreenDetailsTabView extends StatelessWidget {
               SkillsView(),
               EducationView(),
               CerificationView(),
-              ContactView(),
+              SocialsView(),
             ],
           ),
         ),
@@ -159,6 +159,7 @@ class AboutScreenDetailsTabView extends StatelessWidget {
 }
 
 class SkillsView extends StatelessWidget {
+  static const String tabName = "Skills";
   const SkillsView({super.key});
 
   @override
@@ -175,6 +176,7 @@ class SkillsView extends StatelessWidget {
 }
 
 class EducationView extends StatelessWidget {
+  static const String tabName = "Education";
   const EducationView({super.key});
 
   @override
@@ -191,6 +193,7 @@ class EducationView extends StatelessWidget {
 }
 
 class CerificationView extends StatelessWidget {
+  static const String tabName = "Certifications";
   const CerificationView({super.key});
 
   @override
@@ -206,16 +209,17 @@ class CerificationView extends StatelessWidget {
   }
 }
 
-class ContactView extends StatelessWidget {
-  const ContactView({super.key});
+class SocialsView extends StatelessWidget {
+  static const String tabName = "Social";
+  const SocialsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: kContactList.length,
+      itemCount: kSocialsList.length,
       itemBuilder: (context, index) {
         return AboutInfoTile(
-          data: kContactList[index],
+          data: kSocialsList[index],
         );
       },
     );

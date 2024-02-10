@@ -160,6 +160,8 @@ class _HomeScreenState extends State<HomeScreen> {
   ScrollController sc = ScrollController();
 
   void _showMessage() {
+    debugPrint(
+        "Background Color: ${Theme.of(context).scaffoldBackgroundColor}");
     ScaffoldMessenger.of(context).showMaterialBanner(
       MaterialBanner(
         backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
